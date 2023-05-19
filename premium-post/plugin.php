@@ -23,7 +23,7 @@ class premiumPost extends Plugin
 
             $filec = $this->phpPath() . 'security/' . $page->title() . '.txt';
             echo $filec;
-            $encoded = utf8_decode(base64_decode(@file_get_contents($filec)));
+            $encoded = base64_decode(@file_get_contents($filec));
             echo '<script> document.querySelector(".premiumpassword").value = `' . $encoded . '` </script>';
         };
     }
