@@ -18,12 +18,20 @@ class premiumPost extends Plugin
 
         global $page;
 
+        $folder = PATH_CONTENT.'premiumPost/';
+
+        if(file_exists($folder)==false){
+          mkdir($folder,0755);
+          file_put_contents($folder.'.htaccess','Deny from all');
+        };
+
+
         if ($page !== false) {
             echo '<script src="' . $this->domainPath() . 'js/addinput.js"></script>';
 
-            $filec = $this->phpPath() . 'security/' . $page->title() . '.txt';
+            $filec = $folder . $page->title();
             echo $filec;
-            $encoded = utf8_decode(base64_decode(@file_get_contents($filec)));
+            $encoded = base64_decode(@file_get_contents($filec));
             echo '<script> document.querySelector(".premiumpassword").value = `' . $encoded . '` </script>';
         };
     }
@@ -31,11 +39,12 @@ class premiumPost extends Plugin
     public function afterPageModify()
     {
 
+
         if (isset($_POST['password-premium'])) {
 
             $pass = base64_encode($_POST['password-premium']);
-            $folder        = $this->phpPath() . '/security/';
-            $filename = $folder . $_POST['title'] . '.txt';
+            $folder = PATH_CONTENT.'premiumPost/';
+            $filename = $folder . $_POST['title'];
             $chmod_mode    = 0755;
             $folder_exists = file_exists($folder) || mkdir($folder, $chmod_mode);
 
@@ -50,14 +59,14 @@ class premiumPost extends Plugin
 
     public function form(){
 
-        echo '  
-        
+        echo '
+
         <h4>How to use it?</h4>
 
         <br>
 
         <p>Replace</p>
-        
+
         <code style="display:block;width:100%;padding:10px;box-sizing:border-box;">
         &#60;?php  echo $page->content() ;?&#62;
         </code>
@@ -72,19 +81,20 @@ class premiumPost extends Plugin
     }
 }
 
- 
+
 
 function get_passContent()
 {
 
     global $page;
     global $L;
+    $folder = PATH_CONTENT.'premiumPost/';
 
 
-    $filec = PATH_PLUGINS . 'premium-post/security/' . $page->title() . '.txt';
+    $filec = $folder . $page->title();
 
 
-    $encoded = utf8_decode(base64_decode(@file_get_contents(@$filec)));
+    $encoded = base64_decode(@file_get_contents(@$filec));
 
     if ($encoded !== '') {
 

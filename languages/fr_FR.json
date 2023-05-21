@@ -1,0 +1,11 @@
+{
+    "plugin-data":
+    {
+        "name": "Premium Post",
+        "description": "Créer du contenu protégé par mot de passe"
+    },
+
+    "bad-password":"Mot de passe erroné",
+    "get-access":"Accéder",
+    "enter-the-password":"Entrer le mot de passe"
+}
